@@ -7,7 +7,7 @@ Compilers rinha implementation in js
 ### Basics
 - [X] Print
 
-- [ ] mutiple values sum or string concat
+- [ ] mutiple values in math or string concat
 - [ ] Var
 - [ ] Str
 - [ ] Int
