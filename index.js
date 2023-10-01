@@ -22,5 +22,10 @@ function operation(expression){
 }
 
 function Add(value){
-
+    if(value.lhs.kind == "Str" || value.rhs.kind == "Str"){
+        return value.lhs.value.toString() + value.rhs.value.toString() 
+    }
+    else{
+        return value.lhs.value + value.rhs.value 
+    }
 }
