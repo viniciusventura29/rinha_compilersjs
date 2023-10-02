@@ -10,7 +10,6 @@ switch (file.expression.kind) {
 }
 
 function operation(expression, sum) {
-  console.log(expression)
   if (!expression.op){
     return expression.value.value
   }
@@ -27,7 +26,7 @@ function Add(value, sum) {
   if (value.lhs.kind == "Str" || value.rhs.kind == "Str") {
     if (value.rhs.rhs) {
       sum += value.lhs.value.toString();
-      return operation(value.rhs.value);
+      return operation(value.rhs, sum);
     }
     sum += value.lhs.value.toString() + value.rhs.value.toString();
     return sum;
