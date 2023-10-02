@@ -1,1 +1,1 @@
-print("hello"+" world")
+print(10 + "OI"+"tchau"+1)

@@ -1,40 +1,43 @@
-const rinhaExecutor = require("./rinhaExecutor");
-rinhaExecutor();
+// const rinhaExecutor = require("./rinhaExecutor");
+// rinhaExecutor();
 
 let file = require("./source.rinha.json");
+var sum = 0 
 
 switch (file.expression.kind) {
   case "Print":
-    console.log(operation(file.expression));
+    console.log(operation(file.expression.value,sum));
 }
 
-function operation(expression) {
-  switch (expression.value.kind) {
-    case "Str":
-      return expression.value.value;
-    case "Binary":
-      if (expression.value.op == "Add") {
-        return Add(expression.value, 0);
-      } else if (expression.value.op == "Sub") {
-        return Sub(expression.value, 0);
-      }
+function operation(expression, sum) {
+  console.log(expression)
+  if (!expression.op){
+    return expression.value.value
   }
+  switch (expression.op){
+    case "Add":
+      return Add(expression, sum);
+    case "Sub":
+      return Sub(expression, sum);
+  }
+
 }
 
 function Add(value, sum) {
   if (value.lhs.kind == "Str" || value.rhs.kind == "Str") {
-    if(value.rhs.rhs){
-        sum += value.lhs.value.toString();
-        return Add(value.rhs.value)
+    if (value.rhs.rhs) {
+      sum += value.lhs.value.toString();
+      return operation(value.rhs.value);
     }
-    sum += value.rhs.value.toString() + value.rhs.value.toString()
-    return sum
+    sum += value.lhs.value.toString() + value.rhs.value.toString();
+    return sum;
   } else {
     if (value.rhs.rhs) {
       sum += value.lhs.value;
-      return Add(value.rhs, sum);
+      return operation(value.rhs, sum);
     }
     sum += value.rhs.value + value.lhs.value;
+    return sum;
   }
 }
 

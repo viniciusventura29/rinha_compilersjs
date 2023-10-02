@@ -1,1 +1,43 @@
-{"name":".\\source.rinha","expression":{"kind":"Print","value":{"kind":"Binary","lhs":{"kind":"Str","value":"hello","location":{"start":6,"end":13,"filename":".\\source.rinha"}},"op":"Add","rhs":{"kind":"Str","value":" world","location":{"start":14,"end":22,"filename":".\\source.rinha"}},"location":{"start":6,"end":22,"filename":".\\source.rinha"}},"location":{"start":0,"end":23,"filename":".\\source.rinha"}},"location":{"start":0,"end":23,"filename":".\\source.rinha"}}
+{
+  "name": "source.rinha",
+  "expression": {
+    "kind": "Print",
+    "value": {
+      "kind": "Binary",
+      "lhs": {
+        "kind": "Int",
+        "value": 10,
+        "location": { "start": 6, "end": 8, "filename": "source.rinha" }
+      },
+      "op": "Add",
+      "rhs": {
+        "kind": "Binary",
+        "lhs": {
+          "kind": "Str",
+          "value": "OI",
+          "location": { "start": 11, "end": 15, "filename": "source.rinha" }
+        },
+        "op": "Add",
+        "rhs": {
+          "kind": "Binary",
+          "lhs": {
+            "kind": "Str",
+            "value": "tchau",
+            "location": { "start": 16, "end": 23, "filename": "source.rinha" }
+          },
+          "op": "Add",
+          "rhs": {
+            "kind": "Int",
+            "value": 1,
+            "location": { "start": 24, "end": 25, "filename": "source.rinha" }
+          },
+          "location": { "start": 16, "end": 25, "filename": "source.rinha" }
+        },
+        "location": { "start": 11, "end": 25, "filename": "source.rinha" }
+      },
+      "location": { "start": 6, "end": 25, "filename": "source.rinha" }
+    },
+    "location": { "start": 0, "end": 26, "filename": "source.rinha" }
+  },
+  "location": { "start": 0, "end": 26, "filename": "source.rinha" }
+}
