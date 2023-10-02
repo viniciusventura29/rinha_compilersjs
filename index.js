@@ -2,54 +2,89 @@
 // rinhaExecutor();
 
 let file = require("./source.rinha.json");
-var sum = 0 
+var operationList = []
+
+function transformArrayToMathExpression(array) {
+  // Join the array elements into a single string
+  const mathExpression = array.join(' ');
+
+  // Define a regular expression to match supported operators (+, -, *, /, %)
+  const operatorRegex = /(\d+)\s*([+\-*\/%])\s*(\d+)/;
+
+  // Replace operator strings with real operators and evaluate the expression
+  const result = mathExpression.replace(operatorRegex, (match, operand1, operator, operand2) => {
+    switch (operator) {
+      case '+':
+        return parseFloat(operand1) + parseFloat(operand2);
+      case '-':
+        return parseFloat(operand1) - parseFloat(operand2);
+      case '*':
+        return parseFloat(operand1) * parseFloat(operand2);
+      case '/':
+        if (parseFloat(operand2) !== 0) {
+          return parseFloat(operand1) / parseFloat(operand2);
+        } else {
+          throw new Error('Division by zero is not allowed.');
+        }
+      case '%':
+        return parseFloat(operand1) % parseFloat(operand2);
+      default:
+        return match; // Return the original string if the operator is not supported
+    }
+  });
+
+  console.log(result)
+
+  return result;
+}
 
 switch (file.expression.kind) {
   case "Print":
-    console.log(operation(file.expression.value,sum));
+  var result = transformArrayToMathExpression(operation(file.expression.value, operationList))
+  console.log(result)
 }
 
-function operation(expression, sum) {
-  if (!expression.op){
+function operation(expression, operationList) {
+  if (!expression.op) {
     return expression.value.value
   }
-  switch (expression.op){
+  switch (expression.op) {
     case "Add":
-      return Add(expression, sum);
+      return Add(expression, operationList);
     case "Sub":
-      return Sub(expression, sum);
+      return Sub(expression, operationList);
   }
 
 }
 
-function Add(value, sum) {
+function Add(value, operationList) {
   if (value.lhs.kind == "Str" || value.rhs.kind == "Str") {
     if (value.rhs.rhs) {
-      sum += value.lhs.value.toString();
-      return operation(value.rhs, sum);
+      operationList.push(value.lhs.value.toString(), '+')
+      return operation(value.rhs, operationList);
     }
-    sum += value.lhs.value.toString() + value.rhs.value.toString();
-    return sum;
+    operationList.push(value.lhs.value.toString(), '+', value.rhs.value.toString())
+    return operationList;
   } else {
     if (value.rhs.rhs) {
-      sum += value.lhs.value;
-      return operation(value.rhs, sum);
+      operationList.push(value.lhs.value, '+')
+      return operation(value.rhs, operationList);
     }
-    sum += value.rhs.value + value.lhs.value;
-    return sum;
+    operationList.push(value.rhs.value + value.lhs.value)
+    return operationList;
   }
 }
 
-function Sub(value, sub) {
+function Sub(value, operationList) {
   if (value.lhs.kind == "Str" || value.rhs.kind == "Str") {
     throw new Error("You can not subtract a string!");
   } else {
     if (value.rhs.rhs) {
-      sub += value.lhs.value;
-      return Sub(value.rhs, sub);
+      operationList.push(value.lhs.value,'-')
+      return Sub(value.rhs, operationList);
     } else {
-      sub -= value.lhs.value + value.rhs.value;
-      return sub;
+      operationList.push(value.lhs.value,'-', value.rhs.value)
+      return operationList;
     }
   }
 }
